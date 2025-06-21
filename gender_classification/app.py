@@ -12,7 +12,7 @@ from sklearn.preprocessing import LabelEncoder
 model = SentenceTransformer('flax-sentence-embeddings/all_datasets_v4_MiniLM-L6')
 
 # Load environment variables from .env
-load_dotenv(os.path.join(os.path.dirname(os.path.dirname(__file__)), '.env'))
+load_dotenv(os.path.join(os.path.dirname(__file__), '.env'))
 
 scaler_path = os.getenv('SCALER_PATH')
 pca_path = os.getenv('PCA_PATH')

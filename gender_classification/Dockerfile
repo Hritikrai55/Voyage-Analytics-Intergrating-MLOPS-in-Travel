@@ -1,25 +1,33 @@
+# Use official Python image
 FROM python:3.10-slim
 
-# Set the working directory in the container
+# Set environment variables
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
+
+# Set work directory
 WORKDIR /app
 
-# Copy pip.conf for faster mirrors
-COPY pip.conf /etc/pip.conf
+# Install dependencies
+COPY requirements.txt .
+RUN pip install --upgrade pip \
+    && pip install -r requirements.txt \
+    && rm -rf /root/.cache/pip
 
-# Copy only the requirements file to leverage Docker cache
-COPY requirements.txt /app/requirements.txt
+# Only copy necessary files
+COPY app.py ./
+COPY scaler.pkl ./
+COPY pca_model.pkl ./
+COPY logistic_model_tuned.pkl ./
 
-# Install any needed packages specified in requirements.txt
-RUN pip install --no-cache-dir -r requirements.txt
+# Set environment variables for model paths (these should match your .env or defaults)
+ENV SCALER_PATH="/app/scaler.pkl"
+ENV PCA_PATH="/app/pca_model.pkl"
+ENV LOGISTIC_PATH="/app/logistic_model_tuned.pkl"
+ENV FLASK_PORT=1111
 
-# Copy the current directory contents into the container at /app
-COPY . /app
-
-# Make port 1111 available to the world outside this container
+# Expose the port Flask runs on
 EXPOSE 1111
 
-# Define environment variable
-ENV FLASK_APP app.py
-
-# Run app.py when the container launches
-CMD ["flask", "run", "--host=0.0.0.0", "--port=1111"]
+# Run the Flask app
+CMD ["python", "/app/app.py"]
