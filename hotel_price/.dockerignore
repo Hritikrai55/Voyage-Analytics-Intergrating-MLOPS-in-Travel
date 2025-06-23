@@ -1,0 +1,28 @@
+# Ignore Python cache and build files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.py[cod]
+
+# Ignore Jupyter notebook checkpoints
+.ipynb_checkpoints
+
+# Ignore virtual environments
+venv/
+
+# Ignore git and VSCode files
+.git/
+.vscode/
+
+# Ignore local environment files
+# .env
+
+# Ignore reports and model files (optional, unless you want them in the image)
+# name_report.txt
+# place_report.txt
+# price_mse.txt
+
+# Ignore datasets if not needed in the image
+*.csv
+*.xlsx

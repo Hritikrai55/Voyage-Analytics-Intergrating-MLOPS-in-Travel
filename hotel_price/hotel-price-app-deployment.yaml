@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hotel-price-app
+  labels:
+    app: hotel-price-app
+    maintainer: "hritik55-hotel-price-prediction"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hotel-price-app
+  template:
+    metadata:
+      labels:
+        app: hotel-price-app
+    spec:
+      containers:
+      - name: hotel-price-app
+        image: hritik55/hotel-price-prediction:latest
+        ports:
+        - containerPort: 8501
+        # envFrom:
+        # - secretRef:
+        #     name: hotel-price-env
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hotel-price-service
+spec:
+  type: NodePort
+  selector:
+    app: hotel-price-app
+  ports:
+    - protocol: TCP
+      port: 8501
+      targetPort: 8501
+      nodePort: 30001
