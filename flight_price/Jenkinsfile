@@ -1,0 +1,53 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                // Clone the Git repository (if not already checked out by Jenkins)
+                git "https://github.com/Hritikrai55/mlops_project.git"
+            }
+        }
+
+        stage('Build') {
+            steps {
+                // Install dependencies and run unit tests
+                sh 'pip install -r requirements.txt'
+                sh "pytest"
+            }
+        }
+
+        stage('Docker Build') {
+            steps {
+                // Build Docker image
+                sh 'docker build -t hritik55/flight-price-prediction:latest .'
+            }
+        }
+
+        stage('Docker Push') {
+            steps {
+                // Push Docker image to DockerHub
+                withCredentials([usernamePassword(credentialsId: 'dockerhub-creds', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
+                    sh 'echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin'
+                    sh 'docker push hritik55/flight-price-prediction:latest'
+                }
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                // Deploy to Kubernetes using deployment.yaml
+                sh 'kubectl apply -f deployment.yaml'
+                // Optionally, check rollout status
+                sh 'kubectl rollout status deployment/flight-price-pred'
+            }
+        }
+    }
+    
+    post {
+        always {
+            // Send notifications or cleanup actions
+            emailext body: 'Build failed', subject: 'Build failed', to: 'hritikrai55@gmail.com'
+        }
+    }
+}

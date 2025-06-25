@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flight-price-pred
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: flight-price-pred
+  template:
+    metadata:
+      labels:
+        app: flight-price-pred
+    spec:
+      containers:
+      - name: flight-price-pred
+        image: hritik55/flight-price-prediction
+        resources:
+          limits:
+            memory: "256Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 1112
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 1112
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 1112
+          initialDelaySeconds: 15
+          periodSeconds: 20
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: flight-price-pred
+spec:
+  selector:
+    app: flight-price-pred
+  ports:
+  - name: http
+    port: 1112
+    targetPort: 1112
+  type: ClusterIP
