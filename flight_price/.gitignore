@@ -49,7 +49,7 @@ coverage.xml
 .python-version
 
 # dotenv
-.env
+# .env
 
 # VS Code
 .vscode/
