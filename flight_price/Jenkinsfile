@@ -12,17 +12,17 @@ pipeline {
             steps {
                 dir('flight_price') {
                     // Debug: list files to verify context
-                    sh 'ls -l'
+                    bat 'ls -l'
                     // Install dependencies if requirements.txt exists
                     script {
                         if (fileExists('requirements.txt')) {
-                            sh 'pip install -r requirements.txt'
+                            bat 'pip install -r requirements.txt'
                         } else {
                             echo 'requirements.txt not found! Skipping pip install.'
                         }
                         // Run tests if pytest exists
                         if (fileExists('tests') || fileExists('test') || fileExists('pytest.ini')) {
-                            sh 'pytest || echo "pytest failed or not present"'
+                            bat 'pytest || echo "pytest failed or not present"'
                         } else {
                             echo 'No test directory or pytest.ini found. Skipping tests.'
                         }
@@ -34,7 +34,7 @@ pipeline {
         stage('Docker Build') {
             steps {
                 dir('flight_price') {
-                    sh 'docker build -t hritik55/flight-price-prediction:latest .'
+                    bat 'docker build -t hritik55/flight-price-prediction:latest .'
                 }
             }
         }
@@ -43,8 +43,8 @@ pipeline {
             steps {
                 dir('flight_price') {
                     withCredentials([usernamePassword(credentialsId: 'dockerhub-creds', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
-                        sh 'echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin'
-                        sh 'docker push hritik55/flight-price-prediction:latest'
+                        bat 'echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin'
+                        bat 'docker push hritik55/flight-price-prediction:latest'
                     }
                 }
             }
@@ -53,8 +53,8 @@ pipeline {
         stage('Deploy') {
             steps {
                 dir('flight_price') {
-                    sh 'kubectl apply -f deployment.yaml'
-                    sh 'kubectl rollout status deployment/flight-price-pred'
+                    bat 'kubectl apply -f deployment.yaml'
+                    bat 'kubectl rollout status deployment/flight-price-pred'
                 }
             }
         }
