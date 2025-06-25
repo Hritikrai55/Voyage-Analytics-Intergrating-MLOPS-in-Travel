@@ -12,7 +12,7 @@ pipeline {
             steps {
                 dir('flight_price') {
                     // Debug: list files to verify context
-                    bat 'ls -l'
+                    bat 'dir'
                     // Install dependencies if requirements.txt exists
                     script {
                         if (fileExists('requirements.txt')) {
