@@ -64,3 +64,7 @@ coverage.xml
 name_report.txt
 place_report.txt
 price_mse.txt
+
+# Airflow logs
+airflow_home/logs/
+
