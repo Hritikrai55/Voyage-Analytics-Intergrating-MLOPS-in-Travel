@@ -1,6 +1,6 @@
 # MLOps in Travel: Price Prediction Suite
 
-This repository is an end-to-end MLOps project focused on building, training, deploying, and orchestrating machine learning models for the travel industry. It includes solutions for flight price prediction, hotel price prediction, and gender classification, demonstrating best practices in reproducibility, automation, and scalable deployment using Docker, Airflow, and MLflow.
+This repository is a comprehensive, production-grade MLOps project designed for the travel industry. It provides robust pipelines for building, training, deploying, and orchestrating machine learning models to solve real-world problems such as flight price prediction, hotel price prediction, and gender classification. The project leverages best practices in reproducibility, automation, CI/CD, and scalable deployment using Docker, Airflow, MLflow, and Kubernetes.
 
 ---
 
@@ -19,12 +19,22 @@ This repository is an end-to-end MLOps project focused on building, training, de
 ---
 
 ## Project Overview
-This project demonstrates a full MLOps pipeline for:
-- **Flight Price Prediction**: Predicts flight prices using machine learning models.
-- **Hotel Price Prediction**: Predicts hotel prices based on various features.
-- **Gender Classification**: Classifies gender from data using ML models.
 
-Each module is containerized and can be orchestrated using Airflow, with experiment tracking via MLflow.
+**MLOps in Travel** is an end-to-end machine learning operations (MLOps) framework tailored for travel industry analytics. The project is structured into three major modules:
+
+- **Flight Price Prediction:** Predicts flight prices using advanced regression models trained on real-world flight data. The module supports experiment tracking, automated retraining, and API-based predictions.
+- **Hotel Price Prediction:** Estimates hotel prices based on historical and contextual features. Includes a dedicated API, deployment scripts, and orchestration pipelines.
+- **Gender Classification:** Classifies user gender from structured data, showcasing classification workflows and model serving.
+
+Key highlights include:
+- Modular codebase for easy extensibility and maintenance
+- Automated data pipelines and workflow orchestration with Apache Airflow
+- Experiment tracking and model registry with MLflow
+- Containerized deployment using Docker and Kubernetes
+- CI/CD automation with Jenkins
+- Example notebooks for exploratory data analysis (EDA) and model development
+
+This project is ideal for data scientists, MLOps engineers, and organizations seeking to implement scalable, production-ready ML systems in the travel sector.
 
 ## Directory Structure
 
