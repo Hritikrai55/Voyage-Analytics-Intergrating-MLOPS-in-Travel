@@ -16,7 +16,7 @@ pipeline {
                     // Install dependencies if requirements.txt exists
                     script {
                         if (fileExists('requirements.txt')) {
-                            bat 'pip install -r requirements.txt'
+                            bat 'python -m pip install -r requirements.txt'
                         } else {
                             echo 'requirements.txt not found! Skipping pip install.'
                         }
