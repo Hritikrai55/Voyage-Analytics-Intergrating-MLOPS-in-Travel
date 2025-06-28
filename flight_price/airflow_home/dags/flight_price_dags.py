@@ -1,12 +1,12 @@
 from airflow import DAG
-from airflow.operators.python_operator import PythonOperator
+from airflow.operators.python import PythonOperator
 from datetime import datetime, timedelta
 
 # Define your default arguments
 default_args = {
     'owner': 'airflow',
     'depends_on_past': False,
-    'start_date': datetime(2025, 6, 26),  
+    'start_date': datetime(2025, 6, 30),  
     'email_on_failure': False,
     'email_on_retry': False,
     'retries': 1,
@@ -18,7 +18,7 @@ dag = DAG(
     'flight_price_prediction_dag',
     default_args=default_args,
     description='A DAG for flight price prediction model pipeline',
-    schedule_interval=timedelta(days=1),  
+    schedule=timedelta(days=1),  
 )
 
 # Define your tasks
