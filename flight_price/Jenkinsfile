@@ -53,8 +53,10 @@ pipeline {
         stage('Deploy') {
             steps {
                 dir('flight_price') {
-                    bat 'kubectl apply -f deployment.yaml'
-                    bat 'kubectl rollout status deployment/flight-price-pred'
+                    withKubeConfig([credentialsId: 'kubernetes-config']) {
+                        bat 'kubectl apply -f deployment.yaml'
+                        bat 'kubectl rollout status deployment/flight-price-pred'
+                    }   
                 }
             }
         }
