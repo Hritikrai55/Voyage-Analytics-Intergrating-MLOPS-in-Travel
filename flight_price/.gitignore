@@ -68,3 +68,9 @@ price_mse.txt
 # Airflow logs
 airflow_home/logs/
 
+# MLflow
+mlruns/
+mlartifacts/
+
+
+
