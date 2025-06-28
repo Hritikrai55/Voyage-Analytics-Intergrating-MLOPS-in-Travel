@@ -2,11 +2,22 @@ import mlflow
 import pandas as pd
 import numpy as np
 import os
+import sys
+import locale
 from dotenv import load_dotenv
 from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 from sklearn.preprocessing import StandardScaler
 from sklearn.ensemble import RandomForestRegressor
+
+# Fix for Unicode encoding issues on Windows
+try:
+    # Configure UTF-8 encoding for stdout to handle Unicode characters
+    sys.stdout.reconfigure(encoding='utf-8')
+except AttributeError:
+    # For older Python versions
+    import io
+    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 
 # Load environment variables
 load_dotenv()
@@ -74,8 +85,8 @@ with mlflow.start_run() as run:
 
     # Hyperparameter tuning and cross-validation using GridSearchCV
     param_dict = {
-        'n_estimators': [300],
-        'max_depth': [15],
+        'n_estimators': [150],
+        'max_depth': [10],
         'min_samples_split': [10],
         'max_features': ['sqrt', 27],
         'n_jobs': [2]
@@ -99,8 +110,8 @@ with mlflow.start_run() as run:
     # Log Parameters and Metrics to MLflow
     mlflow.log_param("test_size", 0.20)
     mlflow.log_param("random_state", 42)
-    mlflow.log_param("n_estimators", 300)
-    mlflow.log_param("max_depth", 15)
+    mlflow.log_param("n_estimators", 150)
+    mlflow.log_param("max_depth", 10)
     mlflow.log_metric("MAE", MAE)
     mlflow.log_metric("MSE", MSE)
     mlflow.log_metric("RMSE", RMSE)
@@ -108,5 +119,3 @@ with mlflow.start_run() as run:
 
     # Log the Trained Model to MLflow
     mlflow.sklearn.log_model(rf_optimal_model, "random_forest_model")
-
-    
