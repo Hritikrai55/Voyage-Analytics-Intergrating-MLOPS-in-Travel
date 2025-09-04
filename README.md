@@ -2,6 +2,8 @@
 
 This repository is a comprehensive, production-grade MLOps project designed for the travel industry. It provides robust pipelines for building, training, deploying, and orchestrating machine learning models to solve real-world problems such as flight price prediction, hotel price prediction, and gender classification. The project leverages best practices in reproducibility, automation, CI/CD, and scalable deployment using Docker, Airflow, MLflow, and Kubernetes.
 
+- 🎓 [Project Certification](https://verified.sertifier.com/en/verify/56636902748863/)
+
 ---
 
 ## Table of Contents
